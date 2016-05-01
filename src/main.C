@@ -10,6 +10,7 @@ PerfLog Moose::perf_log("Stork");
 // Begin the main program.
 int main(int argc, char *argv[])
 {
+  // Test comment
   // Initialize MPI, solvers and MOOSE
   MooseInit init(argc, argv);
 
