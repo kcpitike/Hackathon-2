@@ -1,5 +1,8 @@
-Stork
+Hackathon-2
 =====
+
+
+Here we will be putting the code for the 2016 Phase Field Workshop Hackathon
 
 "Fork Stork" to create a new MOOSE-based application.
 
