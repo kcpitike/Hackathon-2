@@ -17,7 +17,12 @@ public:
 
 protected:
   virtual Real computeValue();
+
+private:
   const VariableValue & _U;
+  const Real _Tm;
+  const Real _Cp;
+  const Real _L;  
 };
 
 #endif // BULKENERGYDENSITY_H

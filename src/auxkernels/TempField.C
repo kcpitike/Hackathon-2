@@ -4,7 +4,6 @@ template<>
 InputParameters validParams<TempField>()
 {
   InputParameters params = validParams<AuxKernel>();
-  params.addRequiredCoupledVar("Phi", "The x component of the polarization");
   params.addRequiredCoupledVar("U", "The y component of the polarization");
   params.addRequiredParam<Real>("Tm", "Melting Temperature");
   params.addRequiredParam<Real>("L", "Geometry Size");
@@ -14,11 +13,10 @@ InputParameters validParams<TempField>()
 
 TempField::TempField(const InputParameters & parameters) :
   AuxKernel(parameters),
-   _Phi(coupledValue("Phi")),
   _U(coupledValue("U")),
   _Tm(getParam<Real>("Tm")),
-  _L(getParam<Real>("L")),
-  _Cp(getParam<Real>("Cp"))
+  _Cp(getParam<Real>("Cp")),
+  _L(getParam<Real>("L"))
 {}
 
 Real
