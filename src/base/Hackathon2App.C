@@ -6,7 +6,11 @@
 
 //Specific Modules
 #include "TensorMechanicsApp.h"
+#include "PhaseFieldApp.h"
 
+//AuxKernels
+
+#include "TempField.h"
 
 //Kernels
 #include "Solidification1.h"
@@ -42,6 +46,9 @@ Hackathon2App::Hackathon2App(InputParameters parameters) :
   TensorMechanicsApp::registerObjects(_factory);
   TensorMechanicsApp::associateSyntax(_syntax, _action_factory);
 
+  PhaseFieldApp::registerObjects(_factory);
+  PhaseFieldApp::associateSyntax(_syntax, _action_factory);
+
 }
 
 Hackathon2App::~Hackathon2App()
@@ -63,6 +70,9 @@ Hackathon2App::registerObjects(Factory & factory)
 {
   #undef registerObject
   #define registerObject(name) factory.reg<name>(stringifyName(name))
+
+  registerAuxKernel(TempField);
+
   registerKernel(Solidification1);
   registerKernel(Solidification2);
   registerKernel(Solidification3);
