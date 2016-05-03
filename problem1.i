@@ -31,7 +31,7 @@
     family = LAGRANGE
     [./InitialCondition]
       type = ConstantIC
-      value = 100.0
+      value = 1.0
     [../]
   [../]
   [./Phi]
@@ -117,7 +117,7 @@
   [./potential_int_top]
     type = DirichletBC
     variable = U
-    value = -100.0
+    value = -1.0
     boundary = 'top bottom left right'
   [../]
 []
