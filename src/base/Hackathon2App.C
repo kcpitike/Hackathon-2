@@ -11,6 +11,10 @@
 //Kernels
 #include "Solidification1.h"
 #include "Solidification2.h"
+#include "Solidification3.h"
+#include "Solidification4dxdy.h"
+#include "XSplitSolidification.h"
+#include "YSplitSolidification.h"
 
 template<>
 InputParameters validParams<Hackathon2App>()
@@ -61,6 +65,10 @@ Hackathon2App::registerObjects(Factory & factory)
   #define registerObject(name) factory.reg<name>(stringifyName(name))
   registerKernel(Solidification1);
   registerKernel(Solidification2);
+  registerKernel(Solidification3);
+  registerKernel(Solidification4dxdy);
+  registerKernel(XSplitSolidification);
+  registerKernel(YSplitSolidification);
 }
 
 // External entry point for dynamic syntax association
