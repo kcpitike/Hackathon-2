@@ -31,11 +31,7 @@ private:
   const Real _m;
   const Real _W0;
   const Real _th0;
-  const Real _Eps_m;
-  const Real _m;
-  const Real _W0;
-  const Real _th0;
-  const Real _t0;
+  const Real _tau0;
 
 };
 #endif //SOLIDIFICATION3_H

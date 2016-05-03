@@ -17,18 +17,14 @@ protected:
   virtual Real computeQpResidual();
 
 private:
-const unsigned int _Phi_var;
-const unsigned int _U_var;
+
 const VariableValue & _Phi;
+const VariableGradient & _Phi_grad;
 const VariableValue & _U;
-const VariableValue & _PhiWdx;
-const VariableValue & _PhiWdy;
-const VariableGradient & _PhiWdx_grad;
-const VariableGradient & _PhiWdy_grad;
 const Real _Eps_m;
 const Real _m;
 const Real _W0;
 const Real _th0;
-const Real _t0;
+const Real _tau0;
 };
 #endif //SOLIDIFICATION2_H

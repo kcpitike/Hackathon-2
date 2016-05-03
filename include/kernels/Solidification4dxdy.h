@@ -25,6 +25,7 @@ protected:
   //virtual Real computeQpJacobian();
 
 private:
+  const VariableGradient & _Phi_grad;
   const VariableValue & _PhiWdx;
   const VariableValue & _PhiWdy;
   const VariableGradient & _PhiWdx_grad;
@@ -33,7 +34,7 @@ private:
   const Real _m;
   const Real _W0;
   const Real _th0;
-  const Real _t0;
+  const Real _tau0;
 
 };
 #endif //SOLIDIFICATION4X_H
