@@ -12,10 +12,10 @@ InputParameters validParams<XSplitSolidification>()
   InputParameters params = validParams<Kernel>();
   params.addRequiredCoupledVar("PhiWdx", "split phase 1 of material");
   params.addRequiredCoupledVar("Phi", "phase of material");
-  params.addRequiredParam<Real>("Eps_m", 1.0, "Epsilon_m");
-  params.addRequiredParam<Real>("m", 1.0, "Integer");
-  params.addRequiredParam<Real>("W0", 1.0, "Interface thickness constant");
-  params.addRequiredParam<Real>("th0", 0.0, "offset azimuthal angle");
+  params.addParam<Real>("Eps_m", 1.0, "Epsilon_m");
+  params.addParam<Real>("m", 1.0, "Integer");
+  params.addParam<Real>("W0", 1.0, "Interface thickness constant");
+  params.addParam<Real>("th0", 0.0, "offset azimuthal angle");
   return params;
 }
 

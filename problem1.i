@@ -2,12 +2,12 @@
 [Mesh]
   type = GeneratedMesh
   dim = 2
-  nx = 100
-  ny = 100
-  ymax = 40
-  ymin = -40
-  xmin = -40
-  xmax = 40
+  nx = 50
+  ny = 50
+  ymax = 60
+  ymin = -60
+  xmin = -60
+  xmax = 60
 []
 
 [GlobalParams]
@@ -18,6 +18,11 @@
   D = 10.0
   W0 = 1.0
   t0 = 1.0
+  Eps_m = 0.025
+  m = 4.0
+  #Cp =
+  #Tm =
+  #L = 20.0
 []
 
 [Variables]
@@ -26,7 +31,7 @@
     family = LAGRANGE
     [./InitialCondition]
       type = ConstantIC
-      value = 1.0
+      value = 100.0
     [../]
   [../]
   [./Phi]
@@ -34,36 +39,45 @@
     family = LAGRANGE
     [./InitialCondition]
       type = SmoothCircleIC
-      x1 = 25.0
-      y1 = 25.0
+      x1 = 15.0
+      y1 = 15.0
       radius = 2.0
-      value = 1.0
+      invalue = 1.0
+      outvalue = 1.0
     [../]
   [../]
   [./PhiWdx]
     order = FIRST
     family = LAGRANGE
+    [./InitialCondition]
+      type = ConstantIC
+      value = 0.0
+    [../]
   [../]
   [./PhiWdy]
     order = FIRST
     family = LAGRANGE
+    [./InitialCondition]
+      type = ConstantIC
+      value = 0.0
+    [../]
   [../]
 []
 
 
 [AuxVariables]
-  [./temp]
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
+  #[./temp]
+#    order = CONSTANT
+#    family = MONOMIAL
+#  [../]
 []
 
 
 [AuxKernels]
-  [./tempfield]
-    type = TempField
-    variable = temp
-  [../]
+#  [./tempfield]
+#    type = TempField
+#    variable = temp
+#  [../]
 []
 
 
@@ -94,7 +108,7 @@
   [../]
   [./solidYsplit]
     type = YSplitSolidification
-    variable = PhiYdx
+    variable = PhiWdy
   [../]
 []
 
@@ -103,7 +117,7 @@
   [./potential_int_top]
     type = DirichletBC
     variable = U
-    value = -1.0
+    value = -100.0
     boundary = 'top bottom left right'
   [../]
 []
@@ -115,7 +129,7 @@
     full = true
     #petsc_options = '-snes_view -snes_linesearch_monitor -snes_converged_reason -ksp_converged_reason'
     #petsc_options_iname = '-ksp_gmres_restart  -snes_rtol -ksp_rtol -pc_type'
-    #petsc_options_value = '    121                1e-6      1e-8    bjacobi'
+    #petsc_options_value = '    121                1e-6      1e-8    lu'
   [../]
 []
 
@@ -133,7 +147,7 @@
   solve_type = 'PJFNK'       #"PJFNK, JFNK, NEWTON"
   scheme = 'implicit-euler'   #"implicit-euler, explicit-euler, crank-nicolson, bdf2, rk-2"
   #dt = 0.5
-  dtmin = 1e-13
+  dtmin = 1e-5
   dtmax = 0.05
 []
 

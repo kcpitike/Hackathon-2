@@ -27,7 +27,7 @@ Solidification4dxdy::Solidification4dxdy(const InputParameters & parameters)
 Real
 Solidification4dxdy::computeQpResidual()
 {
-  return _test[_i][_qp] * (_PhiWdx_grad[_qp](0)  +  _PhiWdy_grad[_qp](1) ) ;
+  return 0.5 * _test[_i][_qp] * (_PhiWdx_grad[_qp](0)  +  _PhiWdy_grad[_qp](1) ) ;
 }
 
 // Real
