@@ -1,8 +1,11 @@
 #include "Hackathon2App.h"
 #include "Moose.h"
 #include "AppFactory.h"
-#include "ModulesApp.h"
+//#include "ModulesApp.h"
 #include "MooseSyntax.h"
+
+//Specific Modules
+#include "TensorMechanicsApp.h"
 
 
 //Kernels
@@ -25,12 +28,16 @@ Hackathon2App::Hackathon2App(InputParameters parameters) :
     MooseApp(parameters)
 {
   Moose::registerObjects(_factory);
-  ModulesApp::registerObjects(_factory);
+  //ModulesApp::registerObjects(_factory);
   Hackathon2App::registerObjects(_factory);
 
   Moose::associateSyntax(_syntax, _action_factory);
-  ModulesApp::associateSyntax(_syntax, _action_factory);
+  //ModulesApp::associateSyntax(_syntax, _action_factory);
   Hackathon2App::associateSyntax(_syntax, _action_factory);
+
+  TensorMechanicsApp::registerObjects(_factory);
+  TensorMechanicsApp::associateSyntax(_syntax, _action_factory);
+
 }
 
 Hackathon2App::~Hackathon2App()
@@ -50,10 +57,8 @@ extern "C" void Hackathon2App__registerObjects(Factory & factory) { Hackathon2Ap
 void
 Hackathon2App::registerObjects(Factory & factory)
 {
-
-#undef registerObject
-#define registerObject(name) factory.reg<name>(stringifyName(name))
-
+  #undef registerObject
+  #define registerObject(name) factory.reg<name>(stringifyName(name))
   registerKernel(Solidification1);
   registerKernel(Solidification2);
 }

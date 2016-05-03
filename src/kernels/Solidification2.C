@@ -1,22 +1,20 @@
 #include "Solidification2.h"
-#include<cmath>    ####
 
 template<>
 InputParameters validParams<Solidification2>()
 {
   InputParameters params = validParams<Kernel>();
-
-  params.addRequiredCoupledVar(“Phi”, "The phase-field parameter”);
-  params.addRequiredCoupledVar(“U”, "The dimensionless temperature field”);
+  params.addRequiredCoupledVar("Phi", "The phase field parameter");
+  params.addRequiredCoupledVar("U", "The dimensionless temperature field");
   return params;
 }
 
 Solidification2::Solidification2(const InputParameters & parameters)
   :Kernel(parameters),
-   _Phi_var(coupled(“Phi”)),
-   _Uu_var(coupled(“U”)),
-   _Phi(coupledValue(“Phi”)),
-   _Uu(coupledValue(“U”)),
+  _Phi_var(coupled("Phi")),
+  _U_var(coupled("U")),
+  _Phi(coupledValue("Phi")),
+  _U(coupledValue("U"))
 {
 }
 

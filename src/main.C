@@ -1,11 +1,11 @@
-#include "Hackathon-2App.h"
+#include "Hackathon2App.h"
 #include "MooseInit.h"
 #include "Moose.h"
 #include "MooseApp.h"
 #include "AppFactory.h"
 
 // Create a performance log
-PerfLog Moose::perf_log("Hackathon-2");
+PerfLog Moose::perf_log("Hackathon2");
 
 // Begin the main program.
 int main(int argc, char *argv[])
@@ -15,10 +15,10 @@ int main(int argc, char *argv[])
   MooseInit init(argc, argv);
 
   // Register this application's MooseApp and any it depends on
-  Hackathon-2App::registerApps();
+  Hackathon2App::registerApps();
 
   // This creates dynamic memory that we're responsible for deleting
-  MooseApp * app = AppFactory::createApp("Hackathon-2App", argc, argv);
+  MooseApp * app = AppFactory::createApp("Hackathon2App", argc, argv);
 
   // Execute the application
   app->run();

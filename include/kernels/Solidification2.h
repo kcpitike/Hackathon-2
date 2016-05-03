@@ -3,24 +3,23 @@
 
 #include "Kernel.h"
 
-class SOLIDIFICATION2;
+class Solidification2;
 
 template<>
-InputParameters validParams<SOLIDIFICATION2>();
+InputParameters validParams<Solidification2>();
 
-class SOLIDIFICATION2: public Kernel
+class Solidification2: public Kernel
 {
 public:
-
-  SOLIDIFICATION2(const InputParameters & parameters);
+  Solidification2(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();
 
-  const unsigned int _Phi;
-  const unsigned int _U;
-  const VariableValue & _Phi;
-  const VariableValue & _U;
-
+private:
+const unsigned int _Phi_var;
+const unsigned int _U_var;
+const VariableValue & _Phi;
+const VariableValue & _U;
 };
 #endif //SOLIDIFICATION2_H

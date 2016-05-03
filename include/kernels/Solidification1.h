@@ -8,23 +8,19 @@ class Solidification1;
 template<>
 InputParameters validParams<Solidification1>();
 
-/**
- * This kernel implements the Laplacian operator:
- * $\nabla u \cdot \nabla \phi_i$
- */
-class Solidification1 : public Kernel
+class Solidification1: public Kernel
 {
 public:
-  Solidification1(const InputParameters & parameters);
 
-  virtual ~Solidification1();
+ Solidification1(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();
-
   virtual Real computeQpJacobian();
 
+private:
   const Real _D;
+
 };
 
 
