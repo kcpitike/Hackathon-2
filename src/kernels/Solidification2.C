@@ -30,5 +30,5 @@ Solidification2::Solidification2(const InputParameters & parameters)
 Real
 Solidification2::computeQpResidual()
 {
-  return 0.5 * ( - _U[_qp] * 15.9566 +_Phi[_qp] + 2 * _U[_qp] * 15.9566 * std::pow(_Phi[_qp], 2.0) - _U[_qp] * 15.9566 * std::pow(_Phi[_qp], 4.0) ) * _test[_i][_qp] / ( _tau0 + 2.0 *_tau0 * std::cos(_m * std::atan(_Phi_grad[_qp](1)/_Phi_grad[_qp](0)) - _th0) * _Eps_m + _tau0 * _Eps_m * _Eps_m * std::cos(_m * std::atan(_Phi_grad[_qp](1)/_Phi_grad[_qp](0)) - _th0) * std::cos(_m * std::atan(_Phi_grad[_qp](1)/_Phi_grad[_qp](0)) - _th0)  );
+  return - (0.5* (15.9566 * _U[_qp] - _Phi[_qp] - 2.0 * _U[_qp] * 15.9566 * _Phi[_qp] * _Phi[_qp] + _U[_qp] * 15.9566 * _Phi[_qp] * _Phi[_qp] * _Phi[_qp] * _Phi[_qp]) * _test[_i][_qp] ) / ( _tau0 + 2.0 *_tau0 * std::cos(_m * std::atan(_Phi_grad[_qp](1)/_Phi_grad[_qp](0)) - _th0) * _Eps_m + _tau0 * _Eps_m * _Eps_m * std::cos(_m * std::atan(_Phi_grad[_qp](1)/_Phi_grad[_qp](0)) - _th0) * std::cos(_m * std::atan(_Phi_grad[_qp](1)/_Phi_grad[_qp](0)) - _th0)  );
 }

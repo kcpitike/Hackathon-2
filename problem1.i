@@ -2,8 +2,8 @@
 [Mesh]
   type = GeneratedMesh
   dim = 2
-  nx = 400
-  ny = 400
+  nx = 200
+  ny = 200
   ymax = 6
   ymin = -6
   xmin = -6
@@ -29,10 +29,10 @@
   [./U]
     order = FIRST
     family = LAGRANGE
-    [./InitialCondition]
-      type = ConstantIC
-      value = 1.0
-    [../]
+    #[./InitialCondition]
+    #  type = ConstantIC
+    #  value = 1.0
+    #[../]
   [../]
   [./Phi]
     order = FIRST
@@ -99,10 +99,10 @@
     type = Solidification2
     variable = Phi
   [../]
-  [./solid3]
-    type = Solidification3
-    variable = Phi
-  [../]
+  #[./solid3]
+  #  type = Solidification3
+  #  variable = Phi
+  #[../]
   #[./solid4]
   #  type = Solidification4dxdy
   #  variable = Phi
@@ -145,7 +145,9 @@
 
 [Executioner]
   type = Transient
-  petsc_options = '-ksp_converged_reason'
+  petsc_options = '-snes_converged_reason'
+  #petsc_options_iname = '-snes_linesearch_type '
+  #petsc_options_value = 'none'
 #    [./TimeStepper]
 #    type = IterationAdaptiveDT
 #    dt = 0.2
@@ -156,9 +158,9 @@
 #    cutback_factor =  0.75
 #[../]
   solve_type = 'PJFNK'       #"PJFNK, JFNK, NEWTON"
-  #scheme = 'implicit-euler'   #"implicit-euler, explicit-euler, crank-nicolson, bdf2, rk-2"
+  #scheme = 'rk-2'   #"implicit-euler, explicit-euler, crank-nicolson, bdf2, rk-2"
   #dt = 0.5
-  dtmin = 1e-12
+  dtmin = 1e-05
   dtmax = 0.05
 []
 
