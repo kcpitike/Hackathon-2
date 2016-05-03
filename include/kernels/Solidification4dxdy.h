@@ -29,6 +29,11 @@ private:
   const VariableValue & _PhiWdy;
   const VariableGradient & _PhiWdx_grad;
   const VariableGradient & _PhiWdy_grad;
+  const Real _Eps_m;
+  const Real _m;
+  const Real _W0;
+  const Real _th0;
+  const Real _t0;
 
 };
 #endif //SOLIDIFICATION4X_H

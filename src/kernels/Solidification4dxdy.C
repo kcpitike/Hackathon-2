@@ -12,6 +12,11 @@ InputParameters validParams<Solidification4dxdy>()
   InputParameters params = validParams<Kernel>();
   params.addRequiredCoupledVar("PhiWdx", "split phase 1 of material");
   params.addRequiredCoupledVar("PhiWdy", "split phase 2 of material");
+  params.addParam<Real>("Eps_m", 1.0, "Epsilon_m");
+  params.addParam<Real>("m", 1.0, "Integer");
+  params.addParam<Real>("W0", 1.0, "Interface thickness constant");
+  params.addParam<Real>("th0", 0.0, "offset azimuthal angle");
+  params.addParam<Real>("t0", 1.0, "time constant");
   return params;
 }
 
@@ -20,14 +25,19 @@ Solidification4dxdy::Solidification4dxdy(const InputParameters & parameters)
   _PhiWdx(coupledValue("PhiWdx")),
   _PhiWdy(coupledValue("PhiWdy")),
   _PhiWdx_grad(coupledGradient("PhiWdx")),
-  _PhiWdy_grad(coupledGradient("PhiWdy"))
+  _PhiWdy_grad(coupledGradient("PhiWdy")),
+  _Eps_m(getParam<Real>("m")),
+  _m(getParam<Real>("m")),
+  _W0(getParam<Real>("W0")),
+  _th0(getParam<Real>("th0")),
+  _t0(getParam<Real>("t0"))
 {
 }
 
 Real
 Solidification4dxdy::computeQpResidual()
 {
-  return 0.5 * _test[_i][_qp] * (_PhiWdx_grad[_qp](0)  +  _PhiWdy_grad[_qp](1) ) ;
+  return 0.5 * _test[_i][_qp] * (_PhiWdx_grad[_qp](0)  +  _PhiWdy_grad[_qp](1) ) / ( _t0 + 2.0 *_t0 * std::cos(_m * std::atan(_Phi_grad[_qp](1)/_Phi_grad[_qp](0)) - _th0) * _Eps_m + _t0 * _Eps_m * _Eps_m * std::cos(_m * std::atan(_Phi_grad[_qp](1)/_Phi_grad[_qp](0)) - _th0) * std::cos(_m * std::atan(_Phi_grad[_qp](1)/_Phi_grad[_qp](0)) - _th0)  ) ;
 }
 
 // Real

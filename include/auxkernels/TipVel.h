@@ -21,7 +21,10 @@ protected:
 private:
   const VariableValue & _U;
   const VariableValue & _Phi;
+  const VariableGradient & _U_grad;
+  const VariableGradient & _Phi_grad;
   const Real _D;
+
 };
 
 #endif // TIPVEL_H

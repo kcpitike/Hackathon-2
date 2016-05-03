@@ -29,10 +29,10 @@
   [./U]
     order = FIRST
     family = LAGRANGE
-    [./InitialCondition]
-      type = ConstantIC
-      value = 1.0
-    [../]
+    #[./InitialCondition]
+    #  type = ConstantIC
+    #  value = 1.0
+    #[../]
   [../]
   [./Phi]
     order = FIRST
