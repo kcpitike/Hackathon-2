@@ -35,6 +35,7 @@ private:
   const Real _W0;
   const Real _th0;
   const Real _tau0;
+  const Real _offset;
 
 };
 #endif //SOLIDIFICATION4X_H

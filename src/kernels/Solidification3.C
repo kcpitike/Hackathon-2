@@ -16,6 +16,7 @@ InputParameters validParams<Solidification3>()
   params.addParam<Real>("W0", 1.0, "Interface thickness constant");
   params.addParam<Real>("th0", 0.0, "offset azimuthal angle");
   params.addParam<Real>("tau0", 1.0, "time constants");
+  params.addParam<Real>("offset", 0.000001, "offset");
   return params;
 }
 
@@ -27,14 +28,24 @@ Solidification3::Solidification3(const InputParameters & parameters)
   _m(getParam<Real>("m")),
   _W0(getParam<Real>("W0")),
   _th0(getParam<Real>("th0")),
-  _tau0(getParam<Real>("tau0"))
+  _tau0(getParam<Real>("tau0")),
+  _offset(getParam<Real>("offset"))
 {
 }
 
 Real
 Solidification3::computeQpResidual()
 {
-  return - 0.5 * _grad_test[_i][_qp] *_W0 * _W0 * _Phi_grad[_qp] * (1 + _Eps_m * std::cos(_th0 - _m * std::atan(_Phi_grad[_qp](1)/_Phi_grad[_qp](0))  )) * (1 + _Eps_m * std::cos(_th0 - _m * std::atan(_Phi_grad[_qp](1)/_Phi_grad[_qp](0))  )) ;
+  Real q;
+  if (_Phi_grad[_qp](0) > _offset)
+  {
+    q = std::atan(_Phi_grad[_qp](1)/(_Phi_grad[_qp](0)));
+  }
+  else
+  {
+    q = 1.0;
+  }
+  return - 0.5 * _grad_test[_i][_qp] *_W0 * _W0 * _Phi_grad[_qp] * (1 + _Eps_m * std::cos(_th0 - _m * q  )) * (1 + _Eps_m * std::cos(_th0 - _m * q  )) /( _tau0 + 2.0 * _tau0 * _Eps_m * std::cos(_m * q - _th0 ) + _tau0 * _Eps_m * _Eps_m * std::cos(_m * q - _th0 ) * std::cos(_m * q - _th0 )  );
 }
 
 // Real

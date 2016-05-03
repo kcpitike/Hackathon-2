@@ -20,6 +20,7 @@
   tau0 = 1.0
   Eps_m = 0.025
   m = 4.0
+  offset = 0.000001
   #Cp =
   #Tm =
   #L = 20.0
@@ -99,10 +100,10 @@
     type = Solidification2
     variable = Phi
   [../]
-  #[./solid3]
-  #  type = Solidification3
-  #  variable = Phi
-  #[../]
+  [./solid3]
+    type = Solidification3
+    variable = Phi
+  [../]
   #[./solid4]
   #  type = Solidification4dxdy
   #  variable = Phi
@@ -138,14 +139,14 @@
   [./smp]
     type = SMP
     full = true
-    #petsc_options_iname = '-ksp_gmres_restart  -snes_rtol -ksp_rtol -pc_type'
-    #petsc_options_value = '    121                1e-6      1e-8    lu'
-  [../]
+    petsc_options_iname = '-ksp_gmres_restart  -snes_rtol -ksp_rtol -pc_type'
+    petsc_options_value = '    521                1e-6      1e-8   bjacobi'
+    [../]
 []
 
 [Executioner]
   type = Transient
-  petsc_options = '-snes_converged_reason'
+  petsc_options = '-snes_converged_reason -snes_monitor'
   #petsc_options_iname = '-snes_linesearch_type '
   #petsc_options_value = 'none'
 #    [./TimeStepper]
@@ -160,8 +161,9 @@
   solve_type = 'PJFNK'       #"PJFNK, JFNK, NEWTON"
   #scheme = 'rk-2'   #"implicit-euler, explicit-euler, crank-nicolson, bdf2, rk-2"
   #dt = 0.5
-  dtmin = 1e-05
-  dtmax = 0.05
+  dtmin = 1e-20
+  dt  = 1e-8
+  dtmax = 10
 []
 
 [Outputs]
