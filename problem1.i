@@ -2,12 +2,12 @@
 [Mesh]
   type = GeneratedMesh
   dim = 2
-  nx = 100
-  ny = 100
-  ymax = 5
-  ymin = -5
-  xmin = -5
-  xmax = 5
+  nx = 50
+  ny = 50
+  ymax = 4
+  ymin = -4
+  xmin = -4
+  xmax = 4
 []
 
 [GlobalParams]
@@ -20,7 +20,7 @@
   tau0 = 1.0
   Eps_m = 0.025
   m = 4.0
-  offset = 0.000000001
+  offset = 0.0000000001
   #Cp =
   #Tm =
   #L = 20.0
@@ -42,27 +42,19 @@
       type = SmoothCircleIC
       x1 = 0.0
       y1 = 0.0
-      radius = 2.0
-      int_width = 0.1
+      radius = 2.1
+      int_width = 0.5
       invalue = 1.0
       outvalue = -1.0
     [../]
   [../]
   #[./PhiWdx]
-  #  order = THIRD
-  #  family = HERMITE
-  #  [./InitialCondition]
-  #    type = ConstantIC
-  #    value = 0.0
-  #  [../]
+  #  order = FIRST
+  #  family = LAGRANGE
   #[../]
   #[./PhiWdy]
-  #  order = THIRD
-  #  family = HERMITE
-  #  [./InitialCondition]
-  #    type = ConstantIC
-  #    value = 0.0
-  #  [../]
+  #  order = FIRST
+  #  family = LAGRANGE
   #[../]
 []
 
@@ -99,11 +91,12 @@
     variable = U
   [../]
 
-
   [./solid2u]
     type = Solidification2
     variable = U
   [../]
+
+
   [./solid3u]
     type = Solidification3
     variable = U
@@ -113,6 +106,8 @@
     type = Solidification2
     variable = Phi
   [../]
+
+
   [./solid3p]
     type = Solidification3
     variable = Phi
@@ -149,6 +144,19 @@
     value = -1.0
     boundary = 'top bottom left right'
   [../]
+
+  #[./liquid_boundary1]
+  #  type = DirichletBC
+  #  variable = PhiWdx
+  #  value = 0.0
+  #  boundary = 'top bottom left right'
+  #[../]
+  #[./liquid_boundary2]
+  #  type = DirichletBC
+  #  variable = PhiWdy
+  #  value = 0.0
+  #  boundary = 'top bottom left right'
+  #[../]
 []
 
 
@@ -160,7 +168,7 @@
     [./EFM_1]
       type = ErrorFractionMarker
       coarsen = 0.2
-      refine = 0.65
+      refine = 0.5
       indicator = GJI_1
     [../]
   [../]
@@ -173,13 +181,29 @@
   [../]
 []
 
+[Postprocessors]
+[./NL_iter]
+  type = NumNonlinearIterations
+ [../]
+ [./L_evals]
+  type = NumResidualEvaluations
+ [../]
+ [./nodes]
+  type = NumNodes
+ [../]
+ [./numDOFs]
+  type = NumDOFs
+ [../]
+[]
+
 
 [Preconditioning]
   [./smp]
     type = SMP
     full = true
-    petsc_options_iname = '-ksp_gmres_restart -snes_rtol -ksp_rtol -pc_type'
-    petsc_options_value = '    356              1e-8     1e-8      lu     '
+    petsc_options_iname = '-pc_type -snes_rtol -ksp_rtol'
+    petsc_options_value = ' lu   1e-6    1e-6'
+
   [../]
 []
 
@@ -199,10 +223,10 @@
 #[../]
   solve_type = 'PJFNK'       #"PJFNK, JFNK, NEWTON"
   abort_on_solve_fail = true
-  scheme = 'bdf2'   #"implicit-euler, explicit-euler, crank-nicolson, bdf2, rk-2"
+  scheme = 'implicit-euler'   #"implicit-euler, explicit-euler, crank-nicolson, bdf2, rk-2"
   #dt = 0.5
   dtmin = 1e-28
-  dt  = 1.0e-6
+  dt  = 1.0e-5
   dtmax = 10
 []
 
@@ -211,7 +235,7 @@
   print_perf_log = true
   [./out]
     type = Exodus
-    file_base = out_prob1_test_test
+    file_base = out_prob1_test_test_test4
     elemental_as_nodal = true
     interval = 1
   [../]

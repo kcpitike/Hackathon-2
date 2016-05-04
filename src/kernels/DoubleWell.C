@@ -5,7 +5,7 @@ InputParameters validParams<DoubleWell>()
 {
   InputParameters params = validParams<Kernel>();
   params.addRequiredCoupledVar("Phi", "Phase field parameter");
-  params.addRequiredParam<Real>("h0", " zero ");
+  params.addParam<Real>("h0", 0.0, " zero ");
   return params;
 }
 

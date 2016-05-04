@@ -14,6 +14,7 @@
 
   zmin = -300
   zmax = 300
+
 []
 
 [GlobalParams]
@@ -135,7 +136,7 @@
     type = SMP
     full = true
     petsc_options_iname = '-ksp_gmres_restart  -snes_rtol -ksp_rtol -pc_type '
-    petsc_options_value = '    1621                1e-8     1e-8      hypre   '
+    petsc_options_value = '    500                1e-8     1e-8      hypre   '
   [../]
 []
 
@@ -157,7 +158,7 @@
   #scheme = 'rk-2'   #"implicit-euler, explicit-euler, crank-nicolson, bdf2, rk-2"
   #dt = 0.5
   dtmin = 1e-28
-  dt  = 0.5e-2
+  dt  = 0.5e-4
   dtmax = 10
 []
 
