@@ -36,14 +36,6 @@ YSplitSolidification::YSplitSolidification(const InputParameters & parameters)
 Real
 YSplitSolidification::computeQpResidual()
 {
-  Real q;
-  if (_Phi_grad[_qp](0) > _offset)
-  {
-    q = std::atan(_Phi_grad[_qp](1)/(_Phi_grad[_qp](0)));
-  }
-  else
-  {
-    q = 1.0;
-  }
+  Real q = 1.0;
   return - _test[_i][_qp] * (_Phi_grad[_qp] * _Phi_grad[_qp] * _Phi_grad[_qp](1) * _m * _W0 * _W0 * std::sin(_th0 - _m * q) * _Eps_m * (1+ std::cos(_th0 - _m * q) * _Eps_m) + _PhiWdy[_qp]);
 }

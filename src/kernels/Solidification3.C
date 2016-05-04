@@ -36,16 +36,8 @@ Solidification3::Solidification3(const InputParameters & parameters)
 Real
 Solidification3::computeQpResidual()
 {
-  Real q;
-  if (_Phi_grad[_qp](0) > _offset)
-  {
-    q = std::atan(_Phi_grad[_qp](1)/(_Phi_grad[_qp](0)));
-  }
-  else
-  {
-    q = 1.0;
-  }
-  return - 0.5 * _grad_test[_i][_qp] *_W0 * _W0 * _Phi_grad[_qp] * (1 + _Eps_m * std::cos(_th0 - _m * q  )) * (1 + _Eps_m * std::cos(_th0 - _m * q  )) /( _tau0 + 2.0 * _tau0 * _Eps_m * std::cos(_m * q - _th0 ) + _tau0 * _Eps_m * _Eps_m * std::cos(_m * q - _th0 ) * std::cos(_m * q - _th0 )  );
+  //return 0.5 * _grad_test[_i][_qp] * _Phi_grad[_qp];
+  return 0.5 * _grad_test[_i][_qp] *_W0 * _W0 * _Phi_grad[_qp] * (1 + _Eps_m * std::cos(_th0 - _m * std::atan(_Phi_grad[_qp](1)/(_Phi_grad[_qp](0)+_offset)  )));
 }
 
 // Real
