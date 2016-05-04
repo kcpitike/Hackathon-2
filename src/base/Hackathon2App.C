@@ -19,6 +19,11 @@
 #include "Solidification4dxdy.h"
 #include "XSplitSolidification.h"
 #include "YSplitSolidification.h"
+#include "DoubleWell.h" 
+#include "ElasticEnergy.h"
+#include "PhaseGrad.h"
+
+
 
 template<>
 InputParameters validParams<Hackathon2App>()
@@ -79,6 +84,10 @@ Hackathon2App::registerObjects(Factory & factory)
   registerKernel(Solidification4dxdy);
   registerKernel(XSplitSolidification);
   registerKernel(YSplitSolidification);
+  registerKernel(DoubleWell);
+  registerKernel(ElasticEnergy);
+  registerKernel(PhaseGrad);
+  
 }
 
 // External entry point for dynamic syntax association
