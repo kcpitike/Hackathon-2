@@ -2,8 +2,8 @@
 [Mesh]
   type = GeneratedMesh
   dim = 2
-  nx = 200
-  ny = 200
+  nx = 100
+  ny = 100
   ymax = 5
   ymin = -5
   xmin = -5
@@ -20,7 +20,7 @@
   tau0 = 1.0
   Eps_m = 0.025
   m = 4.0
-  offset = 0.000001
+  offset = 0.000000001
   #Cp =
   #Tm =
   #L = 20.0
@@ -43,22 +43,22 @@
       x1 = 0.0
       y1 = 0.0
       radius = 2.0
-      int_width = 0.2
+      int_width = 0.1
       invalue = 1.0
       outvalue = -1.0
     [../]
   [../]
   #[./PhiWdx]
-  #  order = FIRST
-  #  family = LAGRANGE
+  #  order = THIRD
+  #  family = HERMITE
   #  [./InitialCondition]
   #    type = ConstantIC
   #    value = 0.0
   #  [../]
   #[../]
   #[./PhiWdy]
-  #  order = FIRST
-  #  family = LAGRANGE
+  #  order = THIRD
+  #  family = HERMITE
   #  [./InitialCondition]
   #    type = ConstantIC
   #    value = 0.0
@@ -88,7 +88,8 @@
     type = TimeDerivative
     variable = U
   [../]
-  [./ctime]
+
+  [./dt_PHI]
     type = TimeDerivative
     variable = Phi
   [../]
@@ -98,6 +99,15 @@
     variable = U
   [../]
 
+
+  [./solid2u]
+    type = Solidification2
+    variable = U
+  [../]
+  [./solid3u]
+    type = Solidification3
+    variable = U
+  [../]
 
   [./solid2p]
     type = Solidification2
@@ -121,6 +131,10 @@
   #[../]
 []
 
+[Materials]
+
+[]
+
 
 [BCs]
   [./heat_boundary]
@@ -138,34 +152,34 @@
 []
 
 
-#[Adaptivity]
-#  marker = EFM_1
-#  initial_steps = 4
-#  max_h_level = 4
-#  [./Markers]
-#    [./EFM_1]
-#      type = ErrorFractionMarker
-#      coarsen = 0.001
-#      refine = 0.5
-#      indicator = GJI_1
-#    [../]
-#  [../]
-#
-#  [./Indicators]
-#    [./GJI_1]
-#     type = GradientJumpIndicator
-#     variable = Phi
-#    [../]
-#  [../]
-#[]
+[Adaptivity]
+  marker = EFM_1
+  initial_steps = 2
+  max_h_level = 2
+  [./Markers]
+    [./EFM_1]
+      type = ErrorFractionMarker
+      coarsen = 0.2
+      refine = 0.65
+      indicator = GJI_1
+    [../]
+  [../]
+
+  [./Indicators]
+    [./GJI_1]
+     type = GradientJumpIndicator
+     variable = Phi
+    [../]
+  [../]
+[]
 
 
 [Preconditioning]
   [./smp]
     type = SMP
     full = true
-    petsc_options_iname = '-ksp_gmres_restart  -snes_rtol -ksp_rtol -pc_type '
-    petsc_options_value = '    1621                1e-8     1e-8      hypre   '
+    petsc_options_iname = '-ksp_gmres_restart -snes_rtol -ksp_rtol -pc_type'
+    petsc_options_value = '    356              1e-8     1e-8      lu     '
   [../]
 []
 
@@ -184,10 +198,11 @@
 #    cutback_factor =  0.75
 #[../]
   solve_type = 'PJFNK'       #"PJFNK, JFNK, NEWTON"
-  #scheme = 'rk-2'   #"implicit-euler, explicit-euler, crank-nicolson, bdf2, rk-2"
+  abort_on_solve_fail = true
+  scheme = 'bdf2'   #"implicit-euler, explicit-euler, crank-nicolson, bdf2, rk-2"
   #dt = 0.5
   dtmin = 1e-28
-  dt  = 0.5e-4
+  dt  = 1.0e-6
   dtmax = 10
 []
 
